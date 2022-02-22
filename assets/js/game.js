@@ -1,7 +1,7 @@
 window.alert("Welcome to Robot Gladiators!");
 var playerName = window.prompt("What is your robot's name?");
 var playerHealth = 100;
-var playerAttack = 40;
+var playerAttack = 10;
 var playerMoney = 10;
 
 // You can also log multiple values at once like this
@@ -10,6 +10,11 @@ console.log(playerName, playerAttack, playerHealth);
 var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
 var enemyHealth = 50;
 var enemyAttack = 12;
+
+console.log(enemyNames);
+console.log(enemyNames.length);
+console.log(enemyNames[0]);
+console.log(enemyNames[3]);
 
 var fight = function(enemyName) {
   while (playerHealth > 0 && enemyHealth > 0) {
@@ -67,17 +72,54 @@ var fight = function(enemyName) {
   }
 };
 
-if (playerHealth > 0) {
-  console.log("Your player is still alive!");
-  window.alert("welcome to Robot Gladiators! Round " + ( i + 1 ) );
+var startGame = function() {
+  // reset player stats
+  playerHealth = 100;
+  playerAttack = 10;
+  playerMoney = 10;
+// fight each enemy-robot by looping over them and fighting them one at a time
+for (var i = 0; i < enemyNames.length; i++) {
+  // if player is still alive, keep fighting
+  if (playerHealth > 0) {
+    // let player know what round they are in, remember that arrays start at 0 so it needs to have 1 added to it
+    window.alert('Welcome to Robot Gladiators! Round ' + (i + 1));
+
+    // pick new enemy to fight based on the index of the enemyNames array
+    var pickedEnemyName = enemyNames[i];
+
+    // reset enemyHealth before starting new fight
+    enemyHealth = 50;
+
+    // use debugger to pause script from running and check what's going on at that moment in the code
+    // debugger;
+
+    // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
+    fight(pickedEnemyName);
+  }
+  // if player isn't alive, stop the game
+  else {
+    window.alert('You have lost your robot in battle! Game Over!');
+    break;
+  }
+}
+var endGame = function() {
+  if (playerHealth > 0) {
+  window.alert("Great job, you've survived the game! You now have a score of " + playerMoney + ".");
 }
 else {
-  window.alert("You have lost your robot in battle! Game Over!");
-
+  window.alert("You've lost your robot in battle.");
+}
+var playAgainConfirm = window.confirm("Would you like to play again?");
+if (playAgainConfirm) {
+  startGame();
+}
+else {
+  window.alert("Thank you for playing Robot Gladiators! Come back soon!");
+}
+};
+//play again
+endGame();
 };
 
-for(var i=0; i<enemyNames.length; i++) {
-  var pickedEnemyName = enemyNames[i];
-  enemyHealth = 50;
-  fight(pickedEnemyName);
-}
+startGame();
+
